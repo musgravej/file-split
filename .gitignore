@@ -6,6 +6,7 @@
 .idea/
 *.sublime-project
 *.sublime-workspace
+Processed/
 
 __pycache__/
 *.py[cod]
