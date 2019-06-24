@@ -76,6 +76,7 @@ class GlobalVar(object):
         self.action = str()
         self.query_head = str()
         self.only_reports = str()
+        self.original_header = list()
 
     def query_header(self):
         # If the first line is a header record, written files will have the same header
@@ -145,7 +146,7 @@ class GlobalVar(object):
             os.makedirs(self.saveDir)
 
 
-def new_dbfields(fields=[]):
+def new_dbfields(fields):
     """
     create sql statement string for new database fields
     """
@@ -163,8 +164,8 @@ def import_records(file_to_import, headers):
     Use list [headers] to create new database
     """
     db = sqlite3.connect('split.db')
-    db.execute('drop table if exists records;')
-    db.execute('create table records ({0});'.format(new_dbfields(headers)))
+    db.execute('DROP TABLE IF EXISTS records;')
+    db.execute('CREATE TABLE records ({0});'.format(new_dbfields(headers)))
 
     print('Importing {}'.format(file_to_import))
 
@@ -271,6 +272,7 @@ def export_file(proc_file):
             export_report(proc_file)
         if g.action == 0:
             export_samples(proc_file)
+            export_report(proc_file)
 
 
 def export_report(proc_file):
@@ -459,5 +461,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-    # test_main()
     sys.exit()
