@@ -33,7 +33,7 @@ class GlobalVarTest(object):
         action = int(input("Sample File or File Break? (0 for sample, 1 for break): "))
         if action not in [0, 1]:
             print("Error: must be 0 or 1")
-            time.sleep(3)
+            time.sleep(6)
             sys.exit()
         else:
             self.action = action
@@ -43,7 +43,7 @@ class GlobalVarTest(object):
         del_type = int(input("Enter delimiter type (0 for tab, 1 for comma): "))
         if del_type not in [0, 1]:
             print("Error: must be 0 or 1")
-            time.sleep(3)
+            time.sleep(6)
             return
         else:
             self.del_type = (',' if del_type == 1 else '\t')
@@ -91,7 +91,7 @@ class GlobalVar(object):
         action = int(input("Sample File or File Break? (0 for sample, 1 for break): "))
         if action not in [0, 1]:
             print("Error: must be 0 or 1")
-            time.sleep(3)
+            time.sleep(6)
             sys.exit()
         else:
             self.action = action
@@ -101,7 +101,7 @@ class GlobalVar(object):
         del_type = int(input("Enter delimiter type (0 for tab, 1 for comma): "))
         if del_type not in [0, 1]:
             print("Error: must be 0 or 1")
-            time.sleep(3)
+            time.sleep(6)
             return
         else:
             self.del_type = (',' if del_type == 1 else '\t')
@@ -110,7 +110,7 @@ class GlobalVar(object):
         ans = int(input("Only output reports (no files)? (0/no, 1/yes): "))
         if ans not in [0, 1]:
             print("Error: must be 0 or 1")
-            time.sleep(3)
+            time.sleep(6)
             sys.exit()
         else:
             self.only_reports = ans
@@ -250,16 +250,17 @@ def get_header_csv(imported_file):
         if len(fields) == len(set(fields)):
             return fields
         else:
-            print("Error: Header file contains duplicate field names:")
+            print("Header file:")
             for field in fields:
                 print(field)
+            print("Error: Header file contains duplicate field names.")
             time.sleep(6)
             return False
 
     except Exception as e:
         print(e)
         print("File Not Found")
-        time.sleep(3)
+        time.sleep(6)
         return False
 
 
@@ -395,7 +396,7 @@ def header_info():
         return [split_field_name[g.split_field_n][1], split_field_name.values()]
     except Exception:
         print("Ooops, something went wrong, check field break index")
-        time.sleep(3)
+        time.sleep(6)
         db.close()
         sys.exit()
 

@@ -5,6 +5,10 @@ import csv
 import time
 import sys
 
+"""
+This version doesn't show field names, only asks for field number 
+"""
+
 
 class GlobalVarTest(object):
 
@@ -88,7 +92,7 @@ class GlobalVar(object):
         action = int(input("Sample File or File Break? (0 for sample, 1 for break): "))
         if action not in [0, 1]:
             print("Error: must be 0 or 1")
-            time.sleep(3)
+            time.sleep(6)
             sys.exit()
         else:
             self.action = action
@@ -98,7 +102,7 @@ class GlobalVar(object):
         del_type = int(input("Enter delimiter type (0 for tab, 1 for comma): "))
         if del_type not in [0, 1]:
             print("Error: must be 0 or 1")
-            time.sleep(3)
+            time.sleep(6)
             return
         else:
             self.del_type = (',' if del_type == 1 else '\t')
@@ -139,7 +143,7 @@ class GlobalVar(object):
         if self.action:
             self.query_only_reports()
         self.query_del_type()
-        # self.query_split_field()
+        self.query_split_field()
         self.query_search_type()
         # Create a new directory for resulting files
         if not os.path.exists(self.saveDir):
@@ -245,9 +249,10 @@ def get_header_csv(imported_file):
         if len(fields) == len(set(fields)):
             return fields
         else:
-            print("Error: Header file contains duplicate field names:")
+            print("Header file:")
             for field in fields:
                 print(field)
+            print("Error: Header file contains duplicate field names.")
             time.sleep(6)
             return False
 
@@ -391,7 +396,7 @@ def header_info():
         return [split_field_name[g.split_field_n][1], split_field_name.values()]
     except KeyError:
         print("Ooops, something went wrong, check field break index")
-        time.sleep(3)
+        time.sleep(6)
         db.close()
         sys.exit()
 
@@ -440,20 +445,18 @@ def main():
     g.ask_questions()
 
     dir_list = os.listdir(os.curdir)
-    n = 0
+
     for proc_file in dir_list:
         if proc_file[-(len(g.searchType)):] == g.searchType:
             print("Processing: " + proc_file)
 
-            if n == 0:
-                if g.query_head:
-                    g.get_query_fields(get_header_csv(proc_file))
-                else:
-                    g.query_split_field()
+            # if g.query_head:
+            #     g.get_query_fields(get_header_csv(proc_file))
+            # else:
+            #     g.query_split_field()
 
             if import_file(proc_file):
                 export_file(proc_file)
-            n += 1
 
     if os.path.isfile(os.path.join(os.curdir, 'split.db')):
         os.remove(os.path.join(os.curdir, 'split.db'))
